@@ -17,7 +17,7 @@ typedef struct PORSTK PORSTK;
 typedef struct PORSTR PORSTR;
 struct PORBUK {
     int   (*c)(PORBUK *root, PORSTK *stack, PORSTR *string);
-    PORBUK *s[27];
+    PORBUK *s[256];
 };
 struct PORSTR {
     char *curr;
@@ -29,18 +29,35 @@ struct PORSTK {
 
 //--------------------------------------------------------------
 //
+PORBUK *POR_Bucket(void) {
+    PORBUK *b = malloc(sizeof(*b));
+    if (b) {
+        memset(b, 0, sizeof(*b));
+    }
+    return b;
+}
+
+//--------------------------------------------------------------
+//
 int POR_Execute(PORBUK *root, PORSTK *stack) {
     return 0;
 }
 
 //--------------------------------------------------------------
 //
-PORSTR *POR_String(const char *string) {
-    string = string ? string : "";
-    PORSTR *p = malloc(sizeof(*p) + strlen(string));
+PORSTR *POR_String(const char *string, int length) {
+    if (length < 0) {
+        length = (int)strlen(string ? string : "");
+    }
+    PORSTR *p = malloc(sizeof(*p) + length);
     if (p) {
+        if (!length || !string) {
+            memset(p, 0, sizeof(*p) + length);
+        } else {
+            memcpy(p->data, string, length);
+            p->data[length] = 0;
+        }
         p->curr = p->data;
-        strcpy(p->data, string);
     }
     return p;
 }
