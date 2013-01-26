@@ -1,5 +1,5 @@
-Psycho Octo Robot
------------------
+Psychic Octo Robot
+------------------
 
 POR is an experiment with lexing out a stack based machine.
 
