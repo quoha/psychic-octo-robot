@@ -187,17 +187,20 @@ PORSTR *POR_String(const char *string, int length) {
 
 //--------------------------------------------------------------
 //
-int F_Hi(PORBUK *root, PORSTK *stack, PORSTR *prog) {
-    POR_Push(stack, pSTR, POR_String(prog->curr, -1));
+int F_ABC(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+    POR_Push(stack, pSTR, POR_String("abc", -1));
     return 1;
 }
 
 //--------------------------------------------------------------
 //
-int F_World(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+int F_Print(PORBUK *root, PORSTK *stack, PORSTR *prog) {
     PORNOD *node = POR_Pop(stack);
     if (node && node->kind == pSTR) {
-        printf("  por:\t%s\n", node->u.string->data);
+        printf("    p:\t%s\n", node->u.string->data);
+    } else {
+        printf("stack:\t** don't know how to print %d\n", node->kind);
+        return 0;
     }
     return 1;
 }
@@ -206,13 +209,33 @@ int F_World(PORBUK *root, PORSTK *stack, PORSTR *prog) {
 //
 int F_StackDump(PORBUK *root, PORSTK *stack, PORSTR *prog) {
     PORNOD *node = (stack && stack->bottom) ? stack->bottom : 0;
+    int idx = 0;
+    printf("stack:\tdumping stack...\n");
     while (node) {
         if (node->kind == pSTR) {
-            printf("stack:\t%s\n", node->u.string->data);
+            printf("%5d:\t%s\n", idx++, node->u.string->data);
         } else {
-            printf("stack:\t** unknown node type %d\n", node->kind);
+            printf("%5d:\t** unknown node type %d\n", idx++, node->kind);
         }
         node = node->next;
+    }
+    return 1;
+}
+
+//--------------------------------------------------------------
+//
+int F_StackDup(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+    PORNOD *node = (stack && stack->top) ? stack->top : 0;
+    if (node) {
+        if (node->kind == pSTR) {
+            POR_Push(stack, pSTR, POR_String(node->u.string->data, -1));
+        } else {
+            printf("stack:\t** don't know how to duplicate %d\n", node->kind);
+            return 0;
+        }
+    } else {
+        printf("stack:\t** can't dup an empty stack\n");
+        return 0;
     }
     return 1;
 }
@@ -222,12 +245,13 @@ int F_StackDump(PORBUK *root, PORSTK *stack, PORSTR *prog) {
 int main(int argc, const char * argv[])
 {
     PORBUK *root  = POR_Bucket();
-    PORSTR *prog  = POR_String("Hello, World .s ", -1);
+    PORSTR *prog  = POR_String("abc .s dup .s print .s ", -1);
     PORSTK *stack = POR_Stack();
 
+    POR_Register(root, "dup"   , F_StackDup);
     POR_Register(root, ".s"    , F_StackDump);
-    POR_Register(root, "Hello,", F_Hi);
-    POR_Register(root, "World" , F_World);
+    POR_Register(root, "abc"   , F_ABC);
+    POR_Register(root, "print" , F_Print);
 
     POR_Eval(root, stack, prog);
 
