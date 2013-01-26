@@ -14,21 +14,33 @@
 //--------------------------------------------------------------
 //
 typedef struct PORBUK PORBUK;
+typedef struct PORNOD PORNOD;
 typedef struct PORSTK PORSTK;
 typedef struct PORSTR PORSTR;
 struct PORBUK {
     int   (*c)(PORBUK *root, PORSTK *stack, PORSTR *string);
     PORBUK *s[256];
 };
+struct PORNOD {
+    PORSTK *prev;
+    PORSTK *tail;
+    enum {pSTR} kind;
+    union {
+        PORSTR *string;
+        void   *v;
+    } u;
+};
+struct PORSTK {
+    PORNOD *top;
+    PORNOD *bottom;
+};
 struct PORSTR {
     char *curr;
     char *eod;
     char  data[1];
 };
-struct PORSTK {
-    void *p;
-};
 int     POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog);
+PORSTK *POR_Stack(void);
 PORSTR *POR_String(const char *string, int length);
 
 //--------------------------------------------------------------
@@ -98,6 +110,16 @@ int POR_Register(PORBUK *root, const char *name, int (*c)(PORBUK *root, PORSTK *
 
 //--------------------------------------------------------------
 //
+PORSTK *POR_Stack(void) {
+    PORSTK *s = malloc(sizeof(*s));
+    if (s) {
+        memset(s, 0, sizeof(*s));
+    }
+    return s;
+}
+
+//--------------------------------------------------------------
+//
 PORSTR *POR_String(const char *string, int length) {
     if (length < 0) {
         length = (int)strlen(string ? string : "");
@@ -136,7 +158,7 @@ int main(int argc, const char * argv[])
 {
     PORBUK *root  = POR_Bucket();
     PORSTR *prog  = POR_String("Hello, World ", -1);
-    PORSTK *stack = 0;
+    PORSTK *stack = POR_Stack();
 
     POR_Register(root, "Hello,", F_Hi);
     POR_Register(root, "World" , F_World);
