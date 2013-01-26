@@ -129,7 +129,7 @@ PORNOD *POR_Pop(PORSTK *stack) {
     if (node) {
         stack->top = stack->top->prev;
         if (!stack->top) {
-            stack->top = stack->bottom = 0;
+            stack->bottom = 0;
         } else {
             stack->top->next = 0;
         }
@@ -142,15 +142,14 @@ PORNOD *POR_Pop(PORSTK *stack) {
 PORNOD *POR_Push(PORSTK *stack, int kind, void *item) {
     if (stack) {
         PORNOD *node = POR_Node(kind, item);
-        if (!node) {
-            return 0;
-        }
-        if (!stack->top) {
-            stack->top = stack->bottom = node;
-        } else {
-            stack->top->next = node;
-            stack->top->next->prev = stack->top;
-            stack->top = node;
+        if (node) {
+            if (!stack->top) {
+                stack->top = stack->bottom = node;
+            } else {
+                stack->top->next = node;
+                stack->top->next->prev = stack->top;
+                stack->top = stack->top->next;
+            }
         }
     }
     return stack ? stack->top : 0;
@@ -189,14 +188,32 @@ PORSTR *POR_String(const char *string, int length) {
 //--------------------------------------------------------------
 //
 int F_Hi(PORBUK *root, PORSTK *stack, PORSTR *prog) {
-    printf("  por:\thi <<%s>>\n", prog->curr);
+    POR_Push(stack, pSTR, POR_String(prog->curr, -1));
     return 1;
 }
 
 //--------------------------------------------------------------
 //
 int F_World(PORBUK *root, PORSTK *stack, PORSTR *prog) {
-    printf("  por:\tthere!\n");
+    PORNOD *node = POR_Pop(stack);
+    if (node && node->kind == pSTR) {
+        printf("  por:\t%s\n", node->u.string->data);
+    }
+    return 1;
+}
+
+//--------------------------------------------------------------
+//
+int F_StackDump(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+    PORNOD *node = (stack && stack->bottom) ? stack->bottom : 0;
+    while (node) {
+        if (node->kind == pSTR) {
+            printf("stack:\t%s\n", node->u.string->data);
+        } else {
+            printf("stack:\t** unknown node type %d\n", node->kind);
+        }
+        node = node->next;
+    }
     return 1;
 }
 
@@ -205,9 +222,10 @@ int F_World(PORBUK *root, PORSTK *stack, PORSTR *prog) {
 int main(int argc, const char * argv[])
 {
     PORBUK *root  = POR_Bucket();
-    PORSTR *prog  = POR_String("Hello, World ", -1);
+    PORSTR *prog  = POR_String("Hello, World .s ", -1);
     PORSTK *stack = POR_Stack();
 
+    POR_Register(root, ".s"    , F_StackDump);
     POR_Register(root, "Hello,", F_Hi);
     POR_Register(root, "World" , F_World);
 
