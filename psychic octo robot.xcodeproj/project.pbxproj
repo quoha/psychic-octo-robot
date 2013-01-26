@@ -1,0 +1,215 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2DADB30016B35B830044AA43 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 2DADB2FF16B35B830044AA43 /* main.c */; };
+		2DADB30216B35B830044AA43 /* psychic_octo_robot.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = 2DADB30116B35B830044AA43 /* psychic_octo_robot.1 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2DADB2F916B35B830044AA43 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+				2DADB30216B35B830044AA43 /* psychic_octo_robot.1 in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2DADB2FB16B35B830044AA43 /* psychic octo robot */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "psychic octo robot"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2DADB2FF16B35B830044AA43 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		2DADB30116B35B830044AA43 /* psychic_octo_robot.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = psychic_octo_robot.1; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2DADB2F816B35B830044AA43 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2DADB2F016B35B830044AA43 = {
+			isa = PBXGroup;
+			children = (
+				2DADB2FE16B35B830044AA43 /* psychic octo robot */,
+				2DADB2FC16B35B830044AA43 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2DADB2FC16B35B830044AA43 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2DADB2FB16B35B830044AA43 /* psychic octo robot */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2DADB2FE16B35B830044AA43 /* psychic octo robot */ = {
+			isa = PBXGroup;
+			children = (
+				2DADB2FF16B35B830044AA43 /* main.c */,
+				2DADB30116B35B830044AA43 /* psychic_octo_robot.1 */,
+			);
+			path = "psychic octo robot";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2DADB2FA16B35B830044AA43 /* psychic octo robot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2DADB30516B35B830044AA43 /* Build configuration list for PBXNativeTarget "psychic octo robot" */;
+			buildPhases = (
+				2DADB2F716B35B830044AA43 /* Sources */,
+				2DADB2F816B35B830044AA43 /* Frameworks */,
+				2DADB2F916B35B830044AA43 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "psychic octo robot";
+			productName = "psychic octo robot";
+			productReference = 2DADB2FB16B35B830044AA43 /* psychic octo robot */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2DADB2F216B35B830044AA43 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Michael Henderson";
+			};
+			buildConfigurationList = 2DADB2F516B35B830044AA43 /* Build configuration list for PBXProject "psychic octo robot" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2DADB2F016B35B830044AA43;
+			productRefGroup = 2DADB2FC16B35B830044AA43 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2DADB2FA16B35B830044AA43 /* psychic octo robot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2DADB2F716B35B830044AA43 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2DADB30016B35B830044AA43 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2DADB30316B35B830044AA43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2DADB30416B35B830044AA43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2DADB30616B35B830044AA43 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2DADB30716B35B830044AA43 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2DADB2F516B35B830044AA43 /* Build configuration list for PBXProject "psychic octo robot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DADB30316B35B830044AA43 /* Debug */,
+				2DADB30416B35B830044AA43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2DADB30516B35B830044AA43 /* Build configuration list for PBXNativeTarget "psychic octo robot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DADB30616B35B830044AA43 /* Debug */,
+				2DADB30716B35B830044AA43 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2DADB2F216B35B830044AA43 /* Project object */;
+}
