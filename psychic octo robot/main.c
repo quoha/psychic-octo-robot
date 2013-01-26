@@ -28,6 +28,7 @@ struct PORSTR {
 struct PORSTK {
     void *p;
 };
+int     POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog);
 PORSTR *POR_String(const char *string, int length);
 
 //--------------------------------------------------------------
@@ -57,6 +58,7 @@ int POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog) {
                 return rv;
             }
             startOfWord = prog->curr;
+            b = root;
         } else {
             // invalid token
             PORSTR *word = POR_String(startOfWord, (int)(prog->curr + 1 - startOfWord));
@@ -67,6 +69,30 @@ int POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog) {
             return 0;
         }
     }
+    return 1;
+}
+
+//--------------------------------------------------------------
+//
+int POR_Register(PORBUK *root, const char *name, int (*c)(PORBUK *root, PORSTK *stack, PORSTR *string)) {
+    PORBUK *b = root;
+    const unsigned char *s = (const unsigned char *)name;
+    while (*s) {
+        if (!b->s[*s]) {
+            b->s[*s] = POR_Bucket();
+            if (!b->s[*s]) {
+                perror("register function");
+                return 0;
+            }
+        }
+        b = b->s[*s];
+        s++;
+    }
+    if (b->c && b->c != c) {
+        printf("error:\tfunction '%s' is already defined\n", name);
+        return 0;
+    }
+    b->c = c;
     return 1;
 }
 
@@ -92,11 +118,28 @@ PORSTR *POR_String(const char *string, int length) {
 
 //--------------------------------------------------------------
 //
+int F_Hi(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+    printf("  por:\thi <<%s>>\n", prog->curr);
+    return 1;
+}
+
+//--------------------------------------------------------------
+//
+int F_World(PORBUK *root, PORSTK *stack, PORSTR *prog) {
+    printf("  por:\tthere!\n");
+    return 1;
+}
+
+//--------------------------------------------------------------
+//
 int main(int argc, const char * argv[])
 {
     PORBUK *root  = POR_Bucket();
-    PORSTR *prog  = POR_String("Hello, World\n", 12);
+    PORSTR *prog  = POR_String("Hello, World ", -1);
     PORSTK *stack = 0;
+
+    POR_Register(root, "Hello,", F_Hi);
+    POR_Register(root, "World" , F_World);
 
     POR_Eval(root, stack, prog);
 
