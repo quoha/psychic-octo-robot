@@ -22,8 +22,8 @@ struct PORBUK {
     PORBUK *s[256];
 };
 struct PORNOD {
-    PORSTK *prev;
-    PORSTK *next;
+    PORNOD *prev;
+    PORNOD *next;
     enum {pSTR} kind;
     union {
         PORSTR *string;
@@ -40,6 +40,8 @@ struct PORSTR {
     char  data[1];
 };
 int     POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog);
+PORNOD *POR_Pop(PORSTK *stack);
+PORNOD *POR_Push(PORSTK *stack, int kind, void *item);
 PORSTK *POR_Stack(void);
 PORSTR *POR_String(const char *string, int length);
 
@@ -122,10 +124,44 @@ int POR_Register(PORBUK *root, const char *name, int (*c)(PORBUK *root, PORSTK *
 
 //--------------------------------------------------------------
 //
+PORNOD *POR_Pop(PORSTK *stack) {
+    PORNOD *node = (stack && stack->top) ? stack->top : 0;
+    if (node) {
+        stack->top = stack->top->prev;
+        if (!stack->top) {
+            stack->top = stack->bottom = 0;
+        } else {
+            stack->top->next = 0;
+        }
+    }
+    return node;
+}
+
+//--------------------------------------------------------------
+//
+PORNOD *POR_Push(PORSTK *stack, int kind, void *item) {
+    if (stack) {
+        PORNOD *node = POR_Node(kind, item);
+        if (!node) {
+            return 0;
+        }
+        if (!stack->top) {
+            stack->top = stack->bottom = node;
+        } else {
+            stack->top->next = node;
+            stack->top->next->prev = stack->top;
+            stack->top = node;
+        }
+    }
+    return stack ? stack->top : 0;
+}
+
+//--------------------------------------------------------------
+//
 PORSTK *POR_Stack(void) {
     PORSTK *s = malloc(sizeof(*s));
     if (s) {
-        memset(s, 0, sizeof(*s));
+        s->top = s->bottom = 0;
     }
     return s;
 }
