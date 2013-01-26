@@ -23,7 +23,7 @@ struct PORBUK {
 };
 struct PORNOD {
     PORSTK *prev;
-    PORSTK *tail;
+    PORSTK *next;
     enum {pSTR} kind;
     union {
         PORSTR *string;
@@ -82,6 +82,18 @@ int POR_Eval(PORBUK *root, PORSTK *stack, PORSTR *prog) {
         }
     }
     return 1;
+}
+
+//--------------------------------------------------------------
+//
+PORNOD *POR_Node(int kind, void *item) {
+    PORNOD *n = malloc(sizeof(*n));
+    if (n) {
+        n->prev = n->next = 0;
+        n->kind = kind;
+        n->u.v  = item;
+    }
+    return n;
 }
 
 //--------------------------------------------------------------
